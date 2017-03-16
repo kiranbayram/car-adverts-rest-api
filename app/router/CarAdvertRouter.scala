@@ -1,0 +1,33 @@
+package router
+
+import model.CarAdvert
+import model.Implicits._
+import play.api.mvc.BodyParsers.parse
+import play.api.libs.concurrent.Execution.Implicits._
+import play.api.libs.json._
+import play.api.mvc.Action
+import play.api.mvc.Results._
+import play.api.routing.Router
+import play.api.routing.sird._
+import repository.{DefaultCarAdvertsRepository, CarAdvertsRepository}
+
+object CarAdvertsRouter extends DefaultCarAdvertsRepository with CarAdvertsRouter {
+  def apply(): Router.Routes = routes
+}
+
+trait CarAdvertsRouter {
+
+  self: CarAdvertsRepository =>
+
+  def routes: Router.Routes = {
+
+    case GET(p"/carAdverts/${long(id)}") => Action.async {
+      find(id) map {
+        case _ => Ok("Success")
+      }
+    }
+
+  }
+
+}
+
