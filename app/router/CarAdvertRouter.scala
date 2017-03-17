@@ -21,10 +21,16 @@ trait CarAdvertsRouter {
 
   def routes: Router.Routes = {
 
-    case GET(p"/carAdverts/${long(id)}") => Action.async {
+    case GET(p"/car/adverts/${long(id)}") => Action.async {
       find(id) map {
-        case _ => Ok("Success")
+        case Some(carAdvert) => Ok(Json.toJson(carAdvert))
+        case None => NotFound
       }
+    }
+
+    case POST(p"/car/adverts") => Action.async(parse.json[CarAdvert]) { implicit request =>
+      val carAdvert = request.body
+      save(carAdvert) map (_ => Created)
     }
 
   }
