@@ -2,5 +2,10 @@ package model
 
 case class CarAdvert (
 	id: Long,
-	name: String
+	title: String,
+	fuelType: FuelTypes.Value,
+	price: Long,
+	isNew: Boolean,
+	mileage: Option[Long] = None//,
+	//firstRegistration: Option[LocalDate]
 )
