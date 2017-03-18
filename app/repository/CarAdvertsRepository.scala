@@ -13,6 +13,8 @@ trait CarAdvertsRepository {
 
   def save(carAdvert: CarAdvert): Future[Unit]
 
+  def modify(id: Long, carAdvert: CarAdvert): Future[Unit]
+
 }
 
 class DefaultCarAdvertsRepository extends CarAdvertsRepository {
@@ -29,6 +31,10 @@ class DefaultCarAdvertsRepository extends CarAdvertsRepository {
 
   def save(carAdvert: CarAdvert): Future[Unit] = Future {
     carAdverts.put(carAdvert.id, carAdvert)
+  }
+
+  def modify(id: Long, carAdvert: CarAdvert): Future[Unit] = Future {
+    carAdverts.put(id, carAdvert)
   }
 
 }
