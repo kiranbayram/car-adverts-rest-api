@@ -12,6 +12,7 @@ libraryDependencies ++= Seq(
 )
 
 libraryDependencies += filters
+libraryDependencies += "com.github.seratch" %% "awscala" % "0.6.+"
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 
