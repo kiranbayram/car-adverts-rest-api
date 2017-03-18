@@ -15,6 +15,8 @@ trait CarAdvertsRepository {
 
   def modify(id: Long, carAdvert: CarAdvert): Future[Unit]
 
+  def delete(id: Long): Future[Unit]
+
 }
 
 class DefaultCarAdvertsRepository extends CarAdvertsRepository {
@@ -35,6 +37,10 @@ class DefaultCarAdvertsRepository extends CarAdvertsRepository {
 
   def modify(id: Long, carAdvert: CarAdvert): Future[Unit] = Future {
     carAdverts.put(id, carAdvert)
+  }
+
+  def delete(id: Long): Future[Unit] = Future {
+  	carAdverts.remove(id)
   }
 
 }

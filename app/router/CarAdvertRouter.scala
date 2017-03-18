@@ -41,7 +41,11 @@ trait CarAdvertsRouter {
 
     case PUT(p"/car/adverts/${long(id)}") => Action.async(parse.json[CarAdvert]) { implicit request =>
       val carAdvert = request.body
-      modify(id, carAdvert) map (_ => Ok)
+      modify(id, carAdvert) map (_ => NoContent)
+    }
+
+    case DELETE(p"/car/adverts/${long(id)}") => Action.async {
+      delete(id) map (_ => NoContent)
     }
 
   }
