@@ -65,8 +65,100 @@ class CarAdvertsRouterSpec extends PlaySpecification {
       handler must be_!=(None)
     }
 
-    "Not find non-existing car advert" in new WithApplicationLoader(fakeAppLoader) {
+    "Not find non-existing CarAdvert" in new WithApplicationLoader(fakeAppLoader) {
       val fakeRequest = FakeRequest(GET, "/car/adverts/999")
+      val Some(result) = route(fakeRequest)
+
+      status(result) must equalTo(NOT_FOUND)
+    }
+
+    "Create and find the CarAdvert for a new car" in new WithApplicationLoader(fakeAppLoader) {
+      val body = Json.toJson(CarAdvertExamples.newCar)
+      val fakePost = FakeRequest(POST, "/car/adverts").withJsonBody(body)
+      val Some(postResult) = route(fakePost)
+
+      status(postResult) must equalTo(CREATED)
+
+      val fakeRequest = FakeRequest(GET, s"/car/adverts/${CarAdvertExamples.newCar.id}")
+      val Some(result) = route(fakeRequest)
+
+      status(result) must equalTo(OK)
+      contentType(result) must beSome("application/json")
+      contentAsJson(result) must equalTo(body)
+    }
+
+    "Create and find the CarAdvert for a used car" in new WithApplicationLoader(fakeAppLoader) {
+      val body = Json.toJson(CarAdvertExamples.usedCar)
+      val fakePost = FakeRequest(POST, "/car/adverts").withJsonBody(body)
+      val Some(postResult) = route(fakePost)
+
+      status(postResult) must equalTo(CREATED)
+
+      val fakeRequest = FakeRequest(GET, s"/car/adverts/${CarAdvertExamples.usedCar.id}")
+      val Some(result) = route(fakeRequest)
+
+      status(result) must equalTo(OK)
+      contentType(result) must beSome("application/json")
+      contentAsJson(result) must equalTo(body)
+    }
+
+    "Fetch all CarAdverts" in new WithApplicationLoader(fakeAppLoader) {
+      val body = Json.toJson(CarAdvertExamples.newCar)
+      val fakePost = FakeRequest(POST, "/car/adverts").withJsonBody(body)
+      val Some(postResult) = route(fakePost)
+
+      status(postResult) must equalTo(CREATED)
+
+      val bodyForUsedCar = Json.toJson(CarAdvertExamples.usedCar)
+      val fakePostForUsedCar = FakeRequest(POST, "/car/adverts").withJsonBody(bodyForUsedCar)
+      val Some(postResultForUsedCar) = route(fakePostForUsedCar)
+
+      status(postResult) must equalTo(CREATED)
+
+      val fakeRequest = FakeRequest(GET, s"/car/adverts")
+      val Some(result) = route(fakeRequest)
+
+      status(result) must equalTo(OK)
+      contentType(result) must beSome("application/json")
+      contentAsJson(result) must equalTo(JsArray(Seq(bodyForUsedCar, body)))
+    }
+
+    "Modify a CarAdvert" in new WithApplicationLoader(fakeAppLoader) {
+      val body = Json.toJson(CarAdvertExamples.newCar)
+      val fakePost = FakeRequest(POST, "/car/adverts").withJsonBody(body)
+      val Some(postResult) = route(fakePost)
+
+      status(postResult) must equalTo(CREATED)
+
+      val updated = CarAdvertExamples.newCar.copy(title = "Updated title")
+      val updateBody = Json.toJson(updated)
+
+      val fakePut = FakeRequest(PUT, s"/car/adverts/${CarAdvertExamples.newCar.id}").withJsonBody(updateBody)
+      val Some(putResult) = route(fakePut)
+
+      status(putResult) must equalTo(NO_CONTENT)
+
+      val fakeRequest = FakeRequest(GET, s"/car/adverts/${CarAdvertExamples.newCar.id}")
+      val Some(result) = route(fakeRequest)
+
+      status(result) must equalTo(OK)
+      contentType(result) must beSome("application/json")
+      contentAsJson(result) must equalTo(updateBody)
+    }
+
+    "Delete a CarAdvert" in new WithApplicationLoader(fakeAppLoader) {
+      val body = Json.toJson(CarAdvertExamples.newCar)
+      val fakePost = FakeRequest(POST, "/car/adverts").withJsonBody(body)
+      val Some(postResult) = route(fakePost)
+
+      status(postResult) must equalTo(CREATED)
+
+      val fakeDelete = FakeRequest(DELETE, s"/car/adverts/${CarAdvertExamples.newCar.id}")
+      val Some(deleteResult) = route(fakeDelete)
+
+      status(deleteResult) must equalTo(NO_CONTENT)
+
+      val fakeRequest = FakeRequest(GET, s"/car/adverts/${CarAdvertExamples.newCar.id}")
       val Some(result) = route(fakeRequest)
 
       status(result) must equalTo(NOT_FOUND)
