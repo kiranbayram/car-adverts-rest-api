@@ -11,6 +11,8 @@ libraryDependencies ++= Seq(
   specs2 % Test
 )
 
+libraryDependencies += filters
+
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 
 routesGenerator := InjectedRoutesGenerator
