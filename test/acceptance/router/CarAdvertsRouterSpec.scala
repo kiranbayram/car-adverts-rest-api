@@ -120,7 +120,7 @@ class CarAdvertsRouterSpec extends PlaySpecification {
 
       status(result) must equalTo(OK)
       contentType(result) must beSome("application/json")
-      contentAsJson(result) must equalTo(JsArray(Seq(bodyForUsedCar, body)))
+      contentAsJson(result) must equalTo(JsArray(Seq(body, bodyForUsedCar)))
     }
 
     "Modify a CarAdvert" in new WithApplicationLoader(fakeAppLoader) {

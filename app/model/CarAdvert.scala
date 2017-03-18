@@ -11,3 +11,19 @@ case class CarAdvert (
 	mileage: Option[Long] = None,
 	firstRegistration: Option[LocalDate] = None
 )
+
+object CarAdvert {
+	implicit val dateOrdering: Ordering[LocalDate] = Ordering.fromLessThan(_ isBefore _)
+
+	def sort(adverts: Seq[CarAdvert], sortingQueryParam: String): Seq[CarAdvert] =
+		sortingQueryParam.toLowerCase match {
+			case "id" => adverts.sortBy(_.id)
+			case "title" => adverts.sortBy(_.title)
+			case "fueltype" => adverts.sortBy(_.fuelType)
+			case "price" => adverts.sortBy(_.price)
+			case "isnew" => adverts.sortBy(_.isNew)
+			case "mileage" => adverts.sortBy(_.mileage)
+			case "firstregistration" => adverts.sortBy(_.firstRegistration)
+			case _ => adverts.sortBy(_.id)
+		}
+}
