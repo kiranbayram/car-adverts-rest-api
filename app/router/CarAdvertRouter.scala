@@ -21,6 +21,12 @@ trait CarAdvertsRouter {
 
   def routes: Router.Routes = {
 
+    case GET(p"/car/adverts") => Action.async {
+      fetchAll.map { adverts => 
+        Ok(Json.toJson(adverts))
+      }
+    }
+
     case GET(p"/car/adverts/${long(id)}") => Action.async {
       find(id) map {
         case Some(carAdvert) => Ok(Json.toJson(carAdvert))
