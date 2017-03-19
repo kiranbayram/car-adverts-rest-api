@@ -18,7 +18,7 @@ class MongoCarAdvertsRepository(db: DB = CarAdvertsDB) extends CarAdvertsReposit
 
   def find(id: Long): Option[CarAdvert] = {
     val query = queryById(id)
-    
+
     db.carAdvertsCollection.findOne(query).flatMap(_.asCarAdvert)
   }
 

@@ -15,19 +15,22 @@ object MongoConversionHelpers {
 
   class DomainWrapper(rawObject: DBObject) {
     def asCarAdvert: Option[CarAdvert] = {
-      Try {
+      try {
         val id = rawObject.asLong("id")
         val title = rawObject.asString("title")
         val price = rawObject.asLong("price")
         val fuelType: FuelTypes.Value = FuelTypes.withName(rawObject.asString("fuelType"))
         val isNew = rawObject.asBoolean("isNew")
-        val mileage = Option(rawObject.asLong("mileage"))
-        val firstRegistration = Option(rawObject.asLocalDate("firstRegistration"))
+        val mileage = Try(Some(rawObject.asLong("mileage"))).getOrElse(None)
+        val firstRegistration = Try(Some(rawObject.asLocalDate("firstRegistration"))).getOrElse(None)
 
         Some(
           CarAdvert(id, title, fuelType, price, isNew, mileage, firstRegistration)
-        )
-      }.getOrElse(None)
+        )}
+      catch {
+        case e: Exception => println(e.printStackTrace())
+        None
+      }
     }
   }
 
@@ -40,9 +43,7 @@ object MongoConversionHelpers {
         "title" -> carAdvert.title,
         "fuelType" -> carAdvert.fuelType.toString,
         "price" -> carAdvert.price,
-        "isNew" -> carAdvert.isNew/*,
-        "mileage" -> carAdvert.mileage,
-        "firstRegistration" -> carAdvert.firstRegistration.map(_.toDateTimeAtStartOfDay)*/
+        "isNew" -> carAdvert.isNew
       )
 
       carAdvert.mileage.foreach { mileage =>
@@ -50,7 +51,7 @@ object MongoConversionHelpers {
       }
 
       carAdvert.firstRegistration.foreach { firstRegistration =>
-        dbObject.put("firstRegistration", firstRegistration)
+        dbObject.put("firstRegistration", firstRegistration.toDateTimeAtStartOfDay)
       }
 
       dbObject
