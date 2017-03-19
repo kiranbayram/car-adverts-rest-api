@@ -11,6 +11,7 @@ import play.api.mvc.Results._
 import play.api.routing.Router
 import play.api.routing.sird._
 import repository._
+import scala.collection._
 import scala.concurrent.Future
 
 object CarAdvertsRouter extends MongoCarAdvertsRepository with CarAdvertsRouter {
@@ -20,6 +21,8 @@ object CarAdvertsRouter extends MongoCarAdvertsRepository with CarAdvertsRouter 
 trait CarAdvertsRouter {
 
   self: CarAdvertsRepository =>
+
+  val UnprocessableEntityStatusCode = 422
 
   def routes: Router.Routes = {
 
@@ -52,7 +55,9 @@ trait CarAdvertsRouter {
         Future(Created)
       }
       else
-        Future(BadRequest(JsObject(Seq("validation_errors" -> Json.toJson(validationErrors)))))
+        Future {
+          Status(UnprocessableEntityStatusCode)(validationFailed(validationErrors))
+        }
     }
 
     case PUT(p"/car/adverts/${long(id)}") => Action.async(parse.json[CarAdvert]) { implicit request =>
@@ -64,7 +69,9 @@ trait CarAdvertsRouter {
         Future(NoContent)
       }
       else
-        Future(BadRequest(JsObject(Seq("validation_errors" -> Json.toJson(validationErrors)))))
+        Future {
+          Status(UnprocessableEntityStatusCode)(validationFailed(validationErrors))
+        }
     }
 
     case DELETE(p"/car/adverts/${long(id)}") => Action.async {
@@ -73,6 +80,9 @@ trait CarAdvertsRouter {
     }
 
   }
+
+  private def validationFailed(errors: immutable.Set[String]): JsValue =
+    JsObject(Seq("validation_errors" -> Json.toJson(errors)))
 
 }
 

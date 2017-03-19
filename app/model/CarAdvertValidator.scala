@@ -12,7 +12,7 @@ object CarAdvertValidator {
 	val firstRegMustBeSet = "First registration date must be set for used cars"
 	val firstRegMustBeEmpty = "First registration date must be empty for new cars"
 
-	def validate(carAdvert: CarAdvert): Set[String] = {
+	def validate(carAdvert: CarAdvert): immutable.Set[String] = {
 		var errors: immutable.HashSet[String] = immutable.HashSet.empty
 
 		if (carAdvert.id <= 0) 
