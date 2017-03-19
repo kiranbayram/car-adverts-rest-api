@@ -18,15 +18,29 @@ class MongoCarAdvertsRepository extends CarAdvertsRepository {
     db.carAdvertsCollection.find().flatMap(_.asCarAdvert).toList
   }
 
-  def find(id: Long): Future[Option[CarAdvert]] = ???
+  def find(id: Long): Future[Option[CarAdvert]] = Future {
+    val query = queryById(id)
 
-  def create(carAdvert: CarAdvert): Future[Unit] = ???
+    db.carAdvertsCollection.findOne(query).flatMap(_.asCarAdvert)
+  }
 
-  def update(id: Long, carAdvert: CarAdvert): Future[Unit] = ???
+  def create(carAdvert: CarAdvert): Future[Unit] = Future {
+    db.carAdvertsCollection.insert(carAdvert.asDBObject, WriteConcern.Safe)
+  }
 
-  def delete(id: Long): Future[Unit] = ???
+  def update(id: Long, carAdvert: CarAdvert): Future[Unit] = Future {
+    val query = queryById(id)
 
-  private def queryById(id: ObjectId) = {
+    db.carAdvertsCollection.update(query, carAdvert.asDBObject)
+  }
+
+  def delete(id: Long): Future[Unit] = Future {
+    val query = queryById(id)
+
+    db.carAdvertsCollection.findAndRemove(query)
+  }
+
+  private def queryById(id: Long) = {
     MongoDBObject("id" -> id)
   }
 
