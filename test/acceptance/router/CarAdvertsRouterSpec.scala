@@ -7,11 +7,11 @@ import play.api.ApplicationLoader.Context
 import play.api.libs.json._
 import play.api.routing.Router
 import play.api.test._
-import repository.DefaultCarAdvertsRepository
+import repository._
 
 class CarAdvertsRouterSpec extends PlaySpecification {
 
-  object FakeCarAdvertsRouter extends DefaultCarAdvertsRepository with CarAdvertsRouter {
+  object FakeCarAdvertsRouter extends InMemoryCarAdvertsRepository with CarAdvertsRouter {
     def apply(): Router.Routes = routes
   }
 

@@ -10,10 +10,10 @@ import play.api.mvc.Action
 import play.api.mvc.Results._
 import play.api.routing.Router
 import play.api.routing.sird._
-import repository.{DefaultCarAdvertsRepository, CarAdvertsRepository}
+import repository._
 import scala.concurrent.Future
 
-object CarAdvertsRouter extends DefaultCarAdvertsRepository with CarAdvertsRouter {
+object CarAdvertsRouter extends MongoCarAdvertsRepository with CarAdvertsRouter {
   def apply(): Router.Routes = routes
 }
 
