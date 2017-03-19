@@ -3,8 +3,6 @@ package repository
 import com.mongodb.casbah.WriteConcern
 import model._
 import MongoConversionHelpers._
-import org.bson.types.ObjectId
-import org.joda.time.{DateTime, LocalDate}
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
 import play.api.libs.concurrent.Execution.Implicits._
 import router.CarAdvertExamples
