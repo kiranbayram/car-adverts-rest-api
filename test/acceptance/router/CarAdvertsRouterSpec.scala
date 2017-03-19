@@ -1,5 +1,6 @@
 package router
 
+import controller.CarAdvertController
 import model.Implicits._
 import model.CarAdvert
 import play.api._
@@ -11,8 +12,9 @@ import repository._
 
 class CarAdvertsRouterSpec extends PlaySpecification {
 
-  object FakeCarAdvertsRouter extends InMemoryCarAdvertsRepository with CarAdvertsRouter {
-    def apply(): Router.Routes = routes
+  object FakeCarAdvertsRouter extends CarAdvertsRouter {
+    def apply(): Router.Routes = 
+      routes(new CarAdvertController(new InMemoryCarAdvertsRepository))
   }
 
   val fakeAppLoader = new ApplicationLoader() {
