@@ -34,16 +34,27 @@ object MongoConversionHelpers {
 
   class MongoCarAdvert(carAdvert: CarAdvert) {
 
-    def asDBObject: DBObject =
-      MongoDBObject(
+    def asDBObject: DBObject = {
+      val dbObject = MongoDBObject(
         "id" -> carAdvert.id,
         "title" -> carAdvert.title,
-        "fuelType" -> carAdvert.fuelType,
+        "fuelType" -> carAdvert.fuelType.toString,
         "price" -> carAdvert.price,
-        "isNew" -> carAdvert.isNew,
+        "isNew" -> carAdvert.isNew/*,
         "mileage" -> carAdvert.mileage,
-        "firstRegistration" -> carAdvert.firstRegistration
+        "firstRegistration" -> carAdvert.firstRegistration.map(_.toDateTimeAtStartOfDay)*/
       )
+
+      carAdvert.mileage.foreach { mileage =>
+        dbObject.put("mileage", mileage)
+      }
+
+      carAdvert.firstRegistration.foreach { firstRegistration =>
+        dbObject.put("firstRegistration", firstRegistration)
+      }
+
+      dbObject
+    }
   }
 
   implicit def convertToMongoCarAdvert(carAdvert: CarAdvert) = new MongoCarAdvert(carAdvert)
