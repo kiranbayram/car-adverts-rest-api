@@ -7,13 +7,13 @@ import scala.concurrent.Future
 
 trait CarAdvertsRepository {
 
-  def fetchAll: Future[List[CarAdvert]]
+  def findAll: Future[List[CarAdvert]]
 
   def find(id: Long): Future[Option[CarAdvert]]
 
-  def save(carAdvert: CarAdvert): Future[Unit]
+  def create(carAdvert: CarAdvert): Future[Unit]
 
-  def modify(id: Long, carAdvert: CarAdvert): Future[Unit]
+  def update(id: Long, carAdvert: CarAdvert): Future[Unit]
 
   def delete(id: Long): Future[Unit]
 
@@ -23,7 +23,7 @@ class DefaultCarAdvertsRepository extends CarAdvertsRepository {
 
   val carAdverts = mutable.HashMap[Long, CarAdvert]()
 
-  def fetchAll: Future[List[CarAdvert]] = Future {
+  def findAll: Future[List[CarAdvert]] = Future {
   	carAdverts.values.toList
   }
 
@@ -31,11 +31,11 @@ class DefaultCarAdvertsRepository extends CarAdvertsRepository {
     carAdverts.get(id)
   }
 
-  def save(carAdvert: CarAdvert): Future[Unit] = Future {
+  def create(carAdvert: CarAdvert): Future[Unit] = Future {
     carAdverts.put(carAdvert.id, carAdvert)
   }
 
-  def modify(id: Long, carAdvert: CarAdvert): Future[Unit] = Future {
+  def update(id: Long, carAdvert: CarAdvert): Future[Unit] = Future {
     carAdverts.put(id, carAdvert)
   }
 

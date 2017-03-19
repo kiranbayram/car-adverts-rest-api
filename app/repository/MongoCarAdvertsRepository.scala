@@ -14,15 +14,15 @@ import scala.util.Try
 class MongoCarAdvertsRepository extends CarAdvertsRepository {
   lazy val db = CarAdvertsDB
 
-  def fetchAll: Future[List[CarAdvert]] = Future {
+  def findAll: Future[List[CarAdvert]] = Future {
     db.carAdvertsCollection.find().flatMap(_.asCarAdvert).toList
   }
 
   def find(id: Long): Future[Option[CarAdvert]] = ???
 
-  def save(carAdvert: CarAdvert): Future[Unit] = ???
+  def create(carAdvert: CarAdvert): Future[Unit] = ???
 
-  def modify(id: Long, carAdvert: CarAdvert): Future[Unit] = ???
+  def update(id: Long, carAdvert: CarAdvert): Future[Unit] = ???
 
   def delete(id: Long): Future[Unit] = ???
 

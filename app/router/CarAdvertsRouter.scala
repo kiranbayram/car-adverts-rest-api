@@ -24,7 +24,7 @@ trait CarAdvertsRouter {
   def routes: Router.Routes = {
 
     case GET(p"/car/adverts") => Action.async { implicit request =>
-      fetchAll.map { adverts => 
+      findAll.map { adverts => 
         val sortingParam = request.queryString.get("sortby").flatMap(_.headOption).getOrElse("id")
 
         println(s"sortingParam: $sortingParam")
@@ -47,7 +47,7 @@ trait CarAdvertsRouter {
       val validationErrors = CarAdvertValidator.validate(carAdvert)
 
       if (validationErrors.isEmpty)
-        save(carAdvert) map (_ => Created)
+        create(carAdvert) map (_ => Created)
       else
         Future(BadRequest(Json.toJson(validationErrors)))
     }
@@ -57,7 +57,7 @@ trait CarAdvertsRouter {
       val validationErrors = CarAdvertValidator.validate(carAdvert)
 
       if (validationErrors.isEmpty)
-        modify(id, carAdvert) map (_ => NoContent)
+        update(id, carAdvert) map (_ => NoContent)
       else
         Future(BadRequest(Json.toJson(validationErrors)))
     }
