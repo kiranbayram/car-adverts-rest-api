@@ -13,7 +13,7 @@ import scala.util.Try
 
 class MongoCarAdvertsRepository(db: DB = CarAdvertsDB) extends CarAdvertsRepository {
 
-  def findAll: List[CarAdvert] = 
+  def findAll(): List[CarAdvert] = 
     db.carAdvertsCollection.find().flatMap(_.asCarAdvert).toList
 
   def find(id: Long): Option[CarAdvert] = {

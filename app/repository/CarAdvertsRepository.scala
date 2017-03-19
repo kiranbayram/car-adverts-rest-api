@@ -7,7 +7,7 @@ import scala.concurrent.Future
 
 trait CarAdvertsRepository {
 
-  def findAll: List[CarAdvert]
+  def findAll(): List[CarAdvert]
 
   def find(id: Long): Option[CarAdvert]
 
@@ -23,7 +23,7 @@ class DefaultCarAdvertsRepository extends CarAdvertsRepository {
 
   val carAdverts = mutable.HashMap[Long, CarAdvert]()
 
-  def findAll: List[CarAdvert] = carAdverts.values.toList
+  def findAll(): List[CarAdvert] = carAdverts.values.toList
 
   def find(id: Long): Option[CarAdvert] = carAdverts.get(id)
 
@@ -32,7 +32,7 @@ class DefaultCarAdvertsRepository extends CarAdvertsRepository {
 
     true
   }
-  
+
   def update(id: Long, carAdvert: CarAdvert): Boolean = {
     carAdverts.put(carAdvert.id, carAdvert)
 
