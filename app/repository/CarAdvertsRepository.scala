@@ -7,15 +7,15 @@ import scala.concurrent.Future
 
 trait CarAdvertsRepository {
 
-  def findAll: Future[List[CarAdvert]]
+  def findAll: List[CarAdvert]
 
-  def find(id: Long): Future[Option[CarAdvert]]
+  def find(id: Long): Option[CarAdvert]
 
-  def create(carAdvert: CarAdvert): Future[Unit]
+  def create(carAdvert: CarAdvert): Boolean
 
-  def update(id: Long, carAdvert: CarAdvert): Future[Unit]
+  def update(id: Long, carAdvert: CarAdvert): Boolean
 
-  def delete(id: Long): Future[Unit]
+  def delete(id: Long): Unit
 
 }
 
@@ -23,24 +23,23 @@ class DefaultCarAdvertsRepository extends CarAdvertsRepository {
 
   val carAdverts = mutable.HashMap[Long, CarAdvert]()
 
-  def findAll: Future[List[CarAdvert]] = Future {
-  	carAdverts.values.toList
-  }
+  def findAll: List[CarAdvert] = carAdverts.values.toList
 
-  def find(id: Long): Future[Option[CarAdvert]] = Future {
-    carAdverts.get(id)
-  }
+  def find(id: Long): Option[CarAdvert] = carAdverts.get(id)
 
-  def create(carAdvert: CarAdvert): Future[Unit] = Future {
+  def create(carAdvert: CarAdvert): Boolean = {
     carAdverts.put(carAdvert.id, carAdvert)
+
+    true
+  }
+  
+  def update(id: Long, carAdvert: CarAdvert): Boolean = {
+    carAdverts.put(carAdvert.id, carAdvert)
+
+    true
   }
 
-  def update(id: Long, carAdvert: CarAdvert): Future[Unit] = Future {
-    carAdverts.put(id, carAdvert)
-  }
-
-  def delete(id: Long): Future[Unit] = Future {
-  	carAdverts.remove(id)
-  }
+  def delete(id: Long): Unit = carAdverts.remove(id)
 
 }
+

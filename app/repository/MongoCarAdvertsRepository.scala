@@ -13,27 +13,25 @@ import scala.util.Try
 
 class MongoCarAdvertsRepository(db: DB = CarAdvertsDB) extends CarAdvertsRepository {
 
-  def findAll: Future[List[CarAdvert]] = Future {
+  def findAll: List[CarAdvert] = 
     db.carAdvertsCollection.find().flatMap(_.asCarAdvert).toList
-  }
 
-  def find(id: Long): Future[Option[CarAdvert]] = Future {
+  def find(id: Long): Option[CarAdvert] = {
     val query = queryById(id)
-
+    
     db.carAdvertsCollection.findOne(query).flatMap(_.asCarAdvert)
   }
 
-  def create(carAdvert: CarAdvert): Future[Unit] = Future {
-    db.carAdvertsCollection.insert(carAdvert.asDBObject, WriteConcern.Safe)
-  }
+  def create(carAdvert: CarAdvert): Boolean = 
+    db.carAdvertsCollection.insert(carAdvert.asDBObject, WriteConcern.Safe).wasAcknowledged()
 
-  def update(id: Long, carAdvert: CarAdvert): Future[Unit] = Future {
+  def update(id: Long, carAdvert: CarAdvert): Boolean = {
     val query = queryById(id)
 
-    db.carAdvertsCollection.update(query, carAdvert.asDBObject)
+    db.carAdvertsCollection.update(query, carAdvert.asDBObject).wasAcknowledged()
   }
 
-  def delete(id: Long): Future[Unit] = Future {
+  def delete(id: Long): Unit = {
     val query = queryById(id)
 
     db.carAdvertsCollection.findAndRemove(query)

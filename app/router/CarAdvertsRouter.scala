@@ -24,21 +24,22 @@ trait CarAdvertsRouter {
   def routes: Router.Routes = {
 
     case GET(p"/car/adverts") => Action.async { implicit request =>
-      findAll.map { adverts => 
+      Future { 
         val sortingParam = request.queryString.get("sortby").flatMap(_.headOption).getOrElse("id")
-
         println(s"sortingParam: $sortingParam")
-
-        val sortedAdverts = CarAdvert.sort(adverts, sortingParam)
+        
+        val sortedAdverts = CarAdvert.sort(findAll, sortingParam)
 
         Ok(Json.toJson(sortedAdverts))
       }
     }
 
     case GET(p"/car/adverts/${long(id)}") => Action.async {
-      find(id) map {
-        case Some(carAdvert) => Ok(Json.toJson(carAdvert))
-        case None => NotFound
+      Future {
+        find(id) match {
+          case Some(carAdvert) => Ok(Json.toJson(carAdvert))
+          case None => NotFound
+        }
       }
     }
 
@@ -46,8 +47,10 @@ trait CarAdvertsRouter {
       val carAdvert = request.body
       val validationErrors = CarAdvertValidator.validate(carAdvert)
 
-      if (validationErrors.isEmpty)
-        create(carAdvert) map (_ => Created)
+      if (validationErrors.isEmpty) {
+        create(carAdvert)
+        Future(Created)
+      }
       else
         Future(BadRequest(Json.toJson(validationErrors)))
     }
@@ -56,14 +59,17 @@ trait CarAdvertsRouter {
       val carAdvert = request.body
       val validationErrors = CarAdvertValidator.validate(carAdvert)
 
-      if (validationErrors.isEmpty)
-        update(id, carAdvert) map (_ => NoContent)
+      if (validationErrors.isEmpty) {
+        update(id, carAdvert)
+        Future(NoContent)
+      }
       else
         Future(BadRequest(Json.toJson(validationErrors)))
     }
 
     case DELETE(p"/car/adverts/${long(id)}") => Action.async {
-      delete(id) map (_ => NoContent)
+      delete(id)
+      Future(NoContent)
     }
 
   }
