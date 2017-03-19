@@ -52,7 +52,7 @@ trait CarAdvertsRouter {
         Future(Created)
       }
       else
-        Future(BadRequest(Json.toJson(validationErrors)))
+        Future(BadRequest(JsObject(Seq("validation_errors" -> Json.toJson(validationErrors)))))
     }
 
     case PUT(p"/car/adverts/${long(id)}") => Action.async(parse.json[CarAdvert]) { implicit request =>
@@ -64,7 +64,7 @@ trait CarAdvertsRouter {
         Future(NoContent)
       }
       else
-        Future(BadRequest(Json.toJson(validationErrors)))
+        Future(BadRequest(JsObject(Seq("validation_errors" -> Json.toJson(validationErrors)))))
     }
 
     case DELETE(p"/car/adverts/${long(id)}") => Action.async {
