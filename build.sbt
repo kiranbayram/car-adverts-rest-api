@@ -9,7 +9,9 @@ scalaVersion := "2.11.7"
 libraryDependencies ++= Seq(
   ws,
   specs2 % Test,
-  "org.mongodb" %% "casbah" % "3.1.0"
+  "org.mongodb" %% "casbah" % "3.1.0",
+  "org.scalatest" %% "scalatest" % "2.2.1" % "test",
+  "org.scalatestplus" %% "play" % "1.4.0-M3" % "test"
 )
 
 libraryDependencies += filters

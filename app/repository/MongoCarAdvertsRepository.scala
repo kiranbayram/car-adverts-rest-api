@@ -11,8 +11,7 @@ import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.Future
 import scala.util.Try
 
-class MongoCarAdvertsRepository extends CarAdvertsRepository {
-  lazy val db = CarAdvertsDB
+class MongoCarAdvertsRepository(db: DB = CarAdvertsDB) extends CarAdvertsRepository {
 
   def findAll: Future[List[CarAdvert]] = Future {
     db.carAdvertsCollection.find().flatMap(_.asCarAdvert).toList
