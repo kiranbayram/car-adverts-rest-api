@@ -1,5 +1,5 @@
-# Car Advert REST API
-A RESTful web-service to create, view, modify and delete car adverts. Implemented using Scala, Play Framework and MongoDB.
+# Car Adverts REST API
+A RESTful web-service to create, view, modify and delete car adverts. Used Play Framework first time. MongoDB is used for persistence.
 
 **View all car adverts**
 ----
@@ -15,7 +15,7 @@ A RESTful web-service to create, view, modify and delete car adverts. Implemente
    
    `sortby=[field_name]`
 
-   If `sortby` query param is not specified, results will be sorted by car advert id.
+   If `sortby` query param is not specified, results will be sorted by car advert id. [field_name] is case insensitive.
 * **Data Params**
     None
 
