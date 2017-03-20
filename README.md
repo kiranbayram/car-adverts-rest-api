@@ -20,7 +20,7 @@ A RESTful web-service to create, view, modify and delete car adverts.
 
 * **Success Response:**
  
-  * **Code:** 200 
+  * **Code:** 200 (Ok)
     **Content:** `[
 		      {
 		      "id": 88,
@@ -68,7 +68,7 @@ A RESTful web-service to create, view, modify and delete car adverts.
 		      "firstRegistration": "2014-05-05"
 		   }`
 * **Error Response:**
-  * **Code:** 404 
+  * **Code:** 404 (Not found)
   *  **Explanation:** No car advert with given id was found.
 
 * **Sample Calls:**
@@ -168,3 +168,30 @@ A RESTful web-service to create, view, modify and delete car adverts.
    "Price cannot be negative"
   ]}
   `
+
+ **Delete a car advert**
+----
+  Deletes an existing car advert.
+
+* **URL**
+  /car/adverts/:id
+
+* **Method:**
+  `DELETE`
+  
+*  **Query String Params**
+   None
+
+* **Data Params**
+None
+
+* **Success Response:**
+ 
+  * **Code:** 204 (No content)
+    **Content:** None
+
+* **Error Response**
+
+  * **Code:** 404 (Not found)
+  * **Explanation:** This is returned if a car advert with given id is not found.
+
