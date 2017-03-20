@@ -164,6 +164,23 @@ class CarAdvertsRouterSpec extends PlaySpecification {
 
       status(result) must equalTo(NOT_FOUND)
     }
+
+    "Return 404 to a put request for a non-existing advert" in new WithApplicationLoader(fakeAppLoader) {
+      val updated = CarAdvertExamples.newCar.copy(title = "Updated title")
+      val updateBody = Json.toJson(updated)
+
+      val fakePut = FakeRequest(PUT, s"/car/adverts/999").withJsonBody(updateBody)
+      val Some(putResult) = route(fakePut)
+
+      status(putResult) must equalTo(NOT_FOUND)
+    }
+
+    "Return 404 to a delete request for a non-existing advert" in new WithApplicationLoader(fakeAppLoader) {
+      val fakeDelete = FakeRequest(DELETE, s"/car/adverts/999")
+      val Some(deleteResult) = route(fakeDelete)
+
+      status(deleteResult) must equalTo(NOT_FOUND)
+    }
   }
 
 }

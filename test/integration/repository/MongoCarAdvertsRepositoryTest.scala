@@ -66,6 +66,11 @@ class MongoCarAdvertsRepositoryTest extends FunSuite with BeforeAndAfterEach {
     assert(result == Some(updatedAdvert))
   }
 
+  test("Return false for an update to a non-existing car advert") {
+    val updatedAdvert = CarAdvertExamples.newCar.copy(title = "Updated title")
+    assert(mongoRepo.update(999, updatedAdvert) == false)
+  }
+
   test("Delete a car advert from database") {
     val carAdvert = CarAdvertExamples.newCar
     assert(mongoRepo.create(carAdvert))
@@ -75,6 +80,10 @@ class MongoCarAdvertsRepositoryTest extends FunSuite with BeforeAndAfterEach {
     val result = mongoRepo.find(carAdvert.id)
 
     assert(result == None)
+  }
+
+  test("Return false for a deletion of a non-existing car advert") {
+    assert(mongoRepo.delete(999) == false)
   }
 
   override def beforeEach = {
