@@ -1,5 +1,5 @@
 # Car Advert REST API
-A RESTful web-service to create, view, modify and delete car adverts.
+A RESTful web-service to create, view, modify and delete car adverts. Implemented using Scala, Play Framework and MongoDB.
 
 **View all car adverts**
 ----
@@ -108,7 +108,17 @@ A RESTful web-service to create, view, modify and delete car adverts.
  
   * **Code:** 201 (Created)
   
-   * **Content:** None
+   * **Content:** 
+
+   `{
+          "id": 88,
+          "title": "Title for advert 88",
+          "fuelType": "diesel",
+          "price": 20000,
+          "isNew": false,
+          "mileage": 1453,
+          "firstRegistration": "2014-05-05"
+       }`
 
 * **Error Response**
 
@@ -156,9 +166,21 @@ A RESTful web-service to create, view, modify and delete car adverts.
 
 * **Success Response:**
  
-  * **Code:** 204 (No content)
+  * **Code:** 200 (Ok)
   
-    **Content:** None
+    **Content:** 
+
+    `
+      {
+          "id": 88,
+          "title": "Title for advert 88",
+          "fuelType": "diesel",
+          "price": 9999,
+          "isNew": false,
+          "mileage": 1453,
+          "firstRegistration": "2014-05-05"
+       }
+ `
 
 * **Error Response**
 
