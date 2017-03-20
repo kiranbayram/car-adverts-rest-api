@@ -6,6 +6,8 @@ import com.mongodb.casbah.commons.conversions.scala._
 import DBObjectImplicits._
 import model._
 import org.joda.time.DateTime
+import play.api.Logger
+import scala.util.control.NonFatal
 import scala.util.Try
 
 object MongoConversionHelpers {
@@ -28,8 +30,9 @@ object MongoConversionHelpers {
           CarAdvert(id, title, fuelType, price, isNew, mileage, firstRegistration)
         )}
       catch {
-        case e: Exception => println(e.printStackTrace())
-        None
+        case NonFatal(e) => 
+          Logger.error(s"Could not parse db object to car advert: ${e.printStackTrace()}")
+          None
       }
     }
   }
