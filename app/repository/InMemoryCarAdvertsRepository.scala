@@ -13,16 +13,16 @@ class InMemoryCarAdvertsRepository extends CarAdvertsRepository {
 
   def create(carAdvert: CarAdvert): Boolean = {
     carAdverts.put(carAdvert.id, carAdvert)
-
     true
   }
 
   def update(id: Int, carAdvert: CarAdvert): Boolean = {
     carAdverts.put(carAdvert.id, carAdvert)
-
     true
   }
 
-  def delete(id: Int): Unit = carAdverts.remove(id)
-
+  def delete(id: Int): Boolean = {
+    carAdverts.remove(id)
+    true
+  }
 }

@@ -28,13 +28,17 @@ class MongoCarAdvertsRepository(db: DB = CarAdvertsDB) extends CarAdvertsReposit
   def update(id: Int, carAdvert: CarAdvert): Boolean = {
     val query = queryById(id)
 
-    db.carAdvertsCollection.update(query, carAdvert.asDBObject).wasAcknowledged()
+    if (db.carAdvertsCollection.findOne(query).nonEmpty) {
+      db.carAdvertsCollection.update(query, carAdvert.asDBObject)
+      true
+    }
+    else false
   }
 
-  def delete(id: Int): Unit = {
+  def delete(id: Int): Boolean = {
     val query = queryById(id)
 
-    db.carAdvertsCollection.findAndRemove(query)
+    db.carAdvertsCollection.findAndRemove(query).nonEmpty
   }
 
   private def queryById(id: Int) = {

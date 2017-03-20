@@ -67,10 +67,14 @@ class CarAdvertController(repository: CarAdvertsRepository = new MongoCarAdverts
       val validationErrors = CarAdvertValidator.validate(carAdvert)
 
       if (validationErrors.isEmpty) {
-        repository.update(id, carAdvert)
-
-        Logger.debug(s"Response with status code 204 (NoContent) returned.")
-        Future(NoContent)
+        if(repository.update(id, carAdvert)) {
+          Logger.debug(s"Response with status code 204 (NoContent) returned.")
+          Future(NoContent)
+        }
+        else {
+          Logger.debug(s"Response with status code 404 (NotFound) returned.")
+          Future(NotFound)
+        }
       }
       else
         Future {
@@ -82,10 +86,16 @@ class CarAdvertController(repository: CarAdvertsRepository = new MongoCarAdverts
     }
 
     def delete(id: Int) = Action.async {
-      repository.delete(id)
+      if(repository.delete(id)) {
+        Logger.debug(s"Response with status code 204 (NoContent) returned.")
+        Future(NoContent)
+      }
+      else {
+        Logger.debug(s"Response with status code 404 (NotFound) returned.")
+        Future(NotFound)
+      }
 
-      Logger.debug(s"Response with status code 204 (NoContent) returned.")
-      Future(NoContent)
+      
     }
 
   	private def validationFailed(errors: immutable.Set[String]): JsValue =

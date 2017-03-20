@@ -12,6 +12,6 @@ trait CarAdvertsRepository {
 
   def update(id: Int, carAdvert: CarAdvert): Boolean
 
-  def delete(id: Int): Unit
+  def delete(id: Int): Boolean
 
 }
