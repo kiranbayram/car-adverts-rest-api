@@ -51,7 +51,7 @@ class CarAdvertController(repository: CarAdvertsRepository = new MongoCarAdverts
         repository.create(carAdvert)
 
         Logger.debug(s"Response with status code 201 (Created) returned.")
-        Future(Created(Json.toJson(carAdvert)))
+        Future(Created(Json.toJson(carAdvert)).withHeaders(LOCATION -> s"/car/adverts/${carAdvert.id}"))
       }
       else
         Future {
