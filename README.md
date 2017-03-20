@@ -6,12 +6,13 @@ A RESTful web-service to create, view, modify and delete car adverts.
   Returns json data for all car adverts.
 
 * **URL**
-  /car/adverts
+  `/car/adverts`
 
 * **Method:**
   `GET`
   
 *  **Query String Params**
+   
    `sortby=[field_name]`
 
    If `sortby` query param is not specified, results will be sorted by car advert id.
@@ -21,6 +22,7 @@ A RESTful web-service to create, view, modify and delete car adverts.
 * **Success Response:**
  
   * **Code:** 200 (Ok)
+  
     **Content:** `[
 		      {
 		      "id": 88,
@@ -43,6 +45,7 @@ A RESTful web-service to create, view, modify and delete car adverts.
 * **Sample Calls:**
 
   `GET /car/adverts`
+  
   `GET /car/adverts?sortby=price`
 
 **View a single car advert**
@@ -50,13 +53,14 @@ A RESTful web-service to create, view, modify and delete car adverts.
   Returns json data for a single car advert.
 
 * **URL**
-  /car/adverts/:id
+  `/car/adverts/:id`
 
 * **Method:**
   `GET`
   
 * **Success Response:**
   * **Code:** 200 
+  
   * **Content:** `
 		      {
 		      "id": 88,
@@ -69,6 +73,7 @@ A RESTful web-service to create, view, modify and delete car adverts.
 		   }`
 * **Error Response:**
   * **Code:** 404 (Not found)
+  
   *  **Explanation:** No car advert with given id was found.
 
 * **Sample Calls:**
@@ -79,7 +84,7 @@ A RESTful web-service to create, view, modify and delete car adverts.
   Creates a new car advert.
 
 * **URL**
-  /car/adverts
+  `/car/adverts`
 
 * **Method:**
   `POST`
@@ -102,15 +107,19 @@ A RESTful web-service to create, view, modify and delete car adverts.
 * **Success Response:**
  
   * **Code:** 201 (Created)
+  
    * **Content:** None
 
 * **Error Response**
 
   * **Code:** 400 (Bad request)
+  
   * **Explanation:** This is returned if json is invalid or cannot be parsed.
 
   * **Code:** 422 (Unprocessable entity)
+  
   * **Explanation:** Validation failed.
+  
   * **Content:**
   `
   {
@@ -124,7 +133,7 @@ A RESTful web-service to create, view, modify and delete car adverts.
   Modifies an existing car advert.
 
 * **URL**
-  /car/adverts/:id
+  `/car/adverts/:id`
 
 * **Method:**
   `PUT`
@@ -148,18 +157,23 @@ A RESTful web-service to create, view, modify and delete car adverts.
 * **Success Response:**
  
   * **Code:** 204 (No content)
+  
     **Content:** None
 
 * **Error Response**
 
   * **Code:** 404 (Not found)
+  
   * **Explanation:** This is returned if a car advert with given id is not found.
 
   * **Code:** 400 (Bad request)
+  
   * **Explanation:** This is returned if json is invalid or cannot be parsed.
 
   * **Code:** 422 (Unprocessable entity)
+  
   * **Explanation:** Validation failed.
+  
   * **Content:**
   `
   {
@@ -174,7 +188,7 @@ A RESTful web-service to create, view, modify and delete car adverts.
   Deletes an existing car advert.
 
 * **URL**
-  /car/adverts/:id
+  `/car/adverts/:id`
 
 * **Method:**
   `DELETE`
@@ -188,10 +202,12 @@ None
 * **Success Response:**
  
   * **Code:** 204 (No content)
+  
     **Content:** None
 
 * **Error Response**
 
   * **Code:** 404 (Not found)
+  
   * **Explanation:** This is returned if a car advert with given id is not found.
 
