@@ -1,5 +1,5 @@
 # Car Adverts REST API
-A RESTful web-service to create, view, modify and delete car adverts. Used Play Framework first time. MongoDB is used for persistence.
+A RESTful web-service to create, view, modify and delete car adverts. Used Play Framework for the first time. MongoDB is used for persistence.
 
 **View all car adverts**
 ----
