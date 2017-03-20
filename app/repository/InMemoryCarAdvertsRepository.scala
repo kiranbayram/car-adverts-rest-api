@@ -3,7 +3,6 @@ package repository
 import model.CarAdvert
 import scala.collection.mutable
 
-
 class InMemoryCarAdvertsRepository extends CarAdvertsRepository {
 
   val carAdverts = mutable.HashMap[Long, CarAdvert]()

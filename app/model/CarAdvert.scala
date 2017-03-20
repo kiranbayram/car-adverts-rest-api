@@ -1,6 +1,7 @@
 package model
 
 import org.joda.time.LocalDate
+import play.api.libs.json.Json
 
 case class CarAdvert (
 	id: Long,
@@ -13,6 +14,7 @@ case class CarAdvert (
 )
 
 object CarAdvert {
+    implicit val carAdvertFormat = Json.format[CarAdvert]
 	implicit val dateOrdering: Ordering[LocalDate] = Ordering.fromLessThan(_ isBefore _)
 
 	def sort(adverts: Seq[CarAdvert], sortingQueryParam: String): Seq[CarAdvert] =

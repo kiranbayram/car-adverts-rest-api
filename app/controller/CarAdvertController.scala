@@ -1,7 +1,6 @@
 package controller
 
 import model._
-import model.Implicits._
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json._
 import play.api.Logger
@@ -44,7 +43,7 @@ class CarAdvertController(repository: CarAdvertsRepository = new MongoCarAdverts
       }
     }
 
-    def create = Action.async(parse.json[CarAdvert]) { implicit request =>
+    def create() = Action.async(parse.json[CarAdvert]) { implicit request =>
       val carAdvert = request.body
       val validationErrors = CarAdvertValidator.validate(carAdvert)
 

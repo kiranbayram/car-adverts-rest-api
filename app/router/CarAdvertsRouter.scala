@@ -28,7 +28,7 @@ trait CarAdvertsRouter {
     case POST(p"/car/adverts") => {
     	Logger.debug(s"Received api call -> POST /car/adverts")
 
-    	controller.create
+    	controller.create()
     }
 
     case PUT(p"/car/adverts/${long(id)}") => {

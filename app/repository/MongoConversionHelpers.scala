@@ -34,7 +34,6 @@ object MongoConversionHelpers {
     }
   }
 
-
   class MongoCarAdvert(carAdvert: CarAdvert) {
 
     def asDBObject: DBObject = {

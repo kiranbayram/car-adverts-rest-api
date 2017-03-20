@@ -1,7 +1,6 @@
 package router
 
 import controller.CarAdvertController
-import model.Implicits._
 import model.CarAdvert
 import play.api._
 import play.api.ApplicationLoader.Context

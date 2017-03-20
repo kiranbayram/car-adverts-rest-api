@@ -17,7 +17,7 @@ object CarAdvertsDB extends DB {
 	val dbName: String = "car-adverts-db"
 }
 
-// Using a separate test db to avoid polluting prod db with test data.
+// Using a separate test db to avoid (accidentally) polluting prod db with test data.
 object TestDB extends DB {
 	val dbName: String = "test-db"
 }
