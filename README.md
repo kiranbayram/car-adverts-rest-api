@@ -23,24 +23,27 @@ A RESTful web-service to create, view, modify and delete car adverts. Used Play 
  
   * **Code:** 200 (Ok)
   
-    **Content:** `[
+   * **Content:** 
+    ```json
+    	[
 		      {
-		      "id": 88,
-		      "title": "Title for advert 88",
-		      "fuelType": "diesel",
-		      "price": 20000,
-		      "isNew": false,
-		      "mileage": 1453,
-		      "firstRegistration": "2014-05-05"
-		   },
+			      "id": 88,
+			      "title": "Title for advert 88",
+			      "fuelType": "diesel",
+			      "price": 20000,
+			      "isNew": false,
+			      "mileage": 1453,
+			      "firstRegistration": "2014-05-05"
+		      },
 		      {
-		      "id": 199,
-		      "title": "car advert 199",
-		      "fuelType": "gasoline",
-		      "price": 19000,
-		      "isNew": true
-		   }
-]`
+			      "id": 199,
+			      "title": "car advert 199",
+			      "fuelType": "gasoline",
+			      "price": 19000,
+			      "isNew": true
+		       }
+		 ]
+	```
 
 * **Sample Calls:**
 
@@ -61,16 +64,19 @@ A RESTful web-service to create, view, modify and delete car adverts. Used Play 
 * **Success Response:**
   * **Code:** 200 
   
-  * **Content:** `
+  * **Content:** 
+  ```json
 		      {
-		      "id": 88,
-		      "title": "Title for advert 88",
-		      "fuelType": "diesel",
-		      "price": 20000,
-		      "isNew": false,
-		      "mileage": 1453,
-		      "firstRegistration": "2014-05-05"
-		   }`
+			      "id": 88,
+			      "title": "Title for advert 88",
+			      "fuelType": "diesel",
+			      "price": 20000,
+			      "isNew": false,
+			      "mileage": 1453,
+			      "firstRegistration": "2014-05-05"
+		   	}
+    ```
+		   
 * **Error Response:**
   * **Code:** 404 (Not found)
   
@@ -94,7 +100,8 @@ A RESTful web-service to create, view, modify and delete car adverts. Used Play 
 
 * **Data Params**
 
-  `{
+  ```json
+  		{
 		      "id": 88,
 		      "title": "Title for advert 88",
 		      "fuelType": "diesel",
@@ -102,7 +109,8 @@ A RESTful web-service to create, view, modify and delete car adverts. Used Play 
 		      "isNew": false,
 		      "mileage": 1453,
 		      "firstRegistration": "2014-05-05"
-		   }`
+		   }
+   ```
 
 * **Success Response:**
  
@@ -110,7 +118,8 @@ A RESTful web-service to create, view, modify and delete car adverts. Used Play 
   
    * **Content:** 
 
-   `{
+   ```json
+   	{
           "id": 88,
           "title": "Title for advert 88",
           "fuelType": "diesel",
@@ -118,7 +127,8 @@ A RESTful web-service to create, view, modify and delete car adverts. Used Play 
           "isNew": false,
           "mileage": 1453,
           "firstRegistration": "2014-05-05"
-       }`
+       }
+   ```
 
 * **Error Response**
 
@@ -131,12 +141,14 @@ A RESTful web-service to create, view, modify and delete car adverts. Used Play 
   * **Explanation:** Validation failed.
   
   * **Content:**
-  `
+  ```json
   {
-  "validation_errors": [
-   "Id must be a positive number",
-   "Price cannot be negative"
-  ]}`
+	  "validation_errors": [
+	   "Id must be a positive number",
+	   "Price cannot be negative"
+	  ]
+  }
+  ```
 
  **Modify a car advert**
 ----
@@ -152,7 +164,8 @@ A RESTful web-service to create, view, modify and delete car adverts. Used Play 
    None
 
 * **Data Params**
- `
+ 
+ ```json
 		  {
 		      "id": 88,
 		      "title": "Title for advert 88",
@@ -162,7 +175,7 @@ A RESTful web-service to create, view, modify and delete car adverts. Used Play 
 		      "mileage": 1453,
 		      "firstRegistration": "2014-05-05"
 		   }
- `
+ ```
 
 * **Success Response:**
  
@@ -170,7 +183,7 @@ A RESTful web-service to create, view, modify and delete car adverts. Used Play 
   
     **Content:** 
 
-    `
+    ```json
       {
           "id": 88,
           "title": "Title for advert 88",
@@ -180,7 +193,7 @@ A RESTful web-service to create, view, modify and delete car adverts. Used Play 
           "mileage": 1453,
           "firstRegistration": "2014-05-05"
        }
- `
+    ```
 
 * **Error Response**
 
@@ -197,13 +210,14 @@ A RESTful web-service to create, view, modify and delete car adverts. Used Play 
   * **Explanation:** Validation failed.
   
   * **Content:**
-  `
+  ```json
   {
-  "validation_errors": [
-   "Id must be a positive number",
-   "Price cannot be negative"
-  ]}
-  `
+	  "validation_errors": [
+	   "Id must be a positive number",
+	   "Price cannot be negative"
+	  ]
+  }
+  ```
 
  **Delete a car advert**
 ----
