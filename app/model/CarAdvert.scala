@@ -8,8 +8,8 @@ case class CarAdvert (
 	fuelType: FuelTypes.Value,
 	price: Long,
 	isNew: Boolean,
-	mileage: Option[Long] = None,
-	firstRegistration: Option[LocalDate] = None
+	mileage: Option[Long] = None,	// Must be set only for used cars
+	firstRegistration: Option[LocalDate] = None // Must be set only for used cars
 )
 
 object CarAdvert {

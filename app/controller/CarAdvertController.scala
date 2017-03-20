@@ -4,6 +4,7 @@ import model._
 import model.Implicits._
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json._
+import play.api.Logger
 import play.api.mvc.{Action, Controller}
 import repository._
 import scala.collection._
@@ -15,19 +16,30 @@ class CarAdvertController(repository: CarAdvertsRepository = new MongoCarAdverts
 	def viewAll = Action.async { implicit request =>
       Future { 
         val sortingParam = request.queryString.get("sortby").flatMap(_.headOption).getOrElse("id")
-        println(s"sortingParam: $sortingParam")
+        
+        Logger.debug(s"Using sortingParam: $sortingParam")
         
         val sortedAdverts = CarAdvert.sort(repository.findAll, sortingParam)
+        val advertsJson = Json.toJson(sortedAdverts)
 
-        Ok(Json.toJson(sortedAdverts))
+        Logger.debug(s"Response with status code 200 (Ok) returned. Returned adverts: ${advertsJson}")
+        Ok(advertsJson)
       }
     }
 
     def view(id: Long) = Action.async {
       Future {
         repository.find(id) match {
-          case Some(carAdvert) => Ok(Json.toJson(carAdvert))
-          case None => NotFound
+          case Some(carAdvert) => {
+            val advertJson = Json.toJson(carAdvert)
+
+            Logger.debug(s"Response with status code 200 (Ok) returned. Returned advert: ${advertJson}")
+            Ok(advertJson)
+          }
+          case None => {
+            Logger.debug(s"Response with status code 404 (NotFound) returned.")
+            NotFound
+          }
         }
       }
     }
@@ -38,11 +50,16 @@ class CarAdvertController(repository: CarAdvertsRepository = new MongoCarAdverts
 
       if (validationErrors.isEmpty) {
         repository.create(carAdvert)
+
+        Logger.debug(s"Response with status code 201 (Created) returned.")
         Future(Created)
       }
       else
         Future {
-          Status(UnprocessableEntityStatusCode)(validationFailed(validationErrors))
+          val errorsJson = validationFailed(validationErrors)
+
+          Logger.debug(s"Response with status code 422 (UnprocessableEntity) returned. Errors: ${errorsJson}")
+          Status(UnprocessableEntityStatusCode)(errorsJson)
         }
     }
 
@@ -52,16 +69,23 @@ class CarAdvertController(repository: CarAdvertsRepository = new MongoCarAdverts
 
       if (validationErrors.isEmpty) {
         repository.update(id, carAdvert)
+
+        Logger.debug(s"Response with status code 204 (NoContent) returned.")
         Future(NoContent)
       }
       else
         Future {
-          Status(UnprocessableEntityStatusCode)(validationFailed(validationErrors))
+          val errorsJson = validationFailed(validationErrors)
+
+          Logger.debug(s"Response with status code 422 (UnprocessableEntity) returned. Errors: ${errorsJson}")
+          Status(UnprocessableEntityStatusCode)(errorsJson)
         }
     }
 
     def delete(id: Long) = Action.async {
       repository.delete(id)
+
+      Logger.debug(s"Response with status code 204 (NoContent) returned.")
       Future(NoContent)
     }
 
