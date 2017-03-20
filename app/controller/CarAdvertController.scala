@@ -26,7 +26,7 @@ class CarAdvertController(repository: CarAdvertsRepository = new MongoCarAdverts
       }
     }
 
-    def view(id: Long) = Action.async {
+    def view(id: Int) = Action.async {
       Future {
         repository.find(id) match {
           case Some(carAdvert) => {
@@ -62,7 +62,7 @@ class CarAdvertController(repository: CarAdvertsRepository = new MongoCarAdverts
         }
     }
 
-    def modify(id: Long) = Action.async(parse.json[CarAdvert]) { implicit request =>
+    def modify(id: Int) = Action.async(parse.json[CarAdvert]) { implicit request =>
       val carAdvert = request.body
       val validationErrors = CarAdvertValidator.validate(carAdvert)
 
@@ -81,7 +81,7 @@ class CarAdvertController(repository: CarAdvertsRepository = new MongoCarAdverts
         }
     }
 
-    def delete(id: Long) = Action.async {
+    def delete(id: Int) = Action.async {
       repository.delete(id)
 
       Logger.debug(s"Response with status code 204 (NoContent) returned.")

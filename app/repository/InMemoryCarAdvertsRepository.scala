@@ -5,11 +5,11 @@ import scala.collection.mutable
 
 class InMemoryCarAdvertsRepository extends CarAdvertsRepository {
 
-  val carAdverts = mutable.HashMap[Long, CarAdvert]()
+  val carAdverts = mutable.HashMap[Int, CarAdvert]()
 
   def findAll(): List[CarAdvert] = carAdverts.values.toList
 
-  def find(id: Long): Option[CarAdvert] = carAdverts.get(id)
+  def find(id: Int): Option[CarAdvert] = carAdverts.get(id)
 
   def create(carAdvert: CarAdvert): Boolean = {
     carAdverts.put(carAdvert.id, carAdvert)
@@ -17,12 +17,12 @@ class InMemoryCarAdvertsRepository extends CarAdvertsRepository {
     true
   }
 
-  def update(id: Long, carAdvert: CarAdvert): Boolean = {
+  def update(id: Int, carAdvert: CarAdvert): Boolean = {
     carAdverts.put(carAdvert.id, carAdvert)
 
     true
   }
 
-  def delete(id: Long): Unit = carAdverts.remove(id)
+  def delete(id: Int): Unit = carAdverts.remove(id)
 
 }

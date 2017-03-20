@@ -19,7 +19,7 @@ trait CarAdvertsRouter {
     	controller.viewAll
     }
 
-    case GET(p"/car/adverts/${long(id)}") => {
+    case GET(p"/car/adverts/${int(id)}") => {
     	Logger.debug(s"Received api call -> GET /car/adverts/$id")
 
     	controller.view(id)
@@ -31,13 +31,13 @@ trait CarAdvertsRouter {
     	controller.create()
     }
 
-    case PUT(p"/car/adverts/${long(id)}") => {
+    case PUT(p"/car/adverts/${int(id)}") => {
     	Logger.debug(s"Received api call -> PUT /car/adverts/$id")
 
     	controller.modify(id)
     }
 
-    case DELETE(p"/car/adverts/${long(id)}") => {
+    case DELETE(p"/car/adverts/${int(id)}") => {
     	Logger.debug(s"Received api call -> GET /car/adverts/$id")
 
     	controller.delete(id)

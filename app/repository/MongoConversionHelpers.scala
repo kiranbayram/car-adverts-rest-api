@@ -16,12 +16,12 @@ object MongoConversionHelpers {
   class DomainWrapper(rawObject: DBObject) {
     def asCarAdvert: Option[CarAdvert] = {
       try {
-        val id = rawObject.asLong("id")
+        val id = rawObject.asInt("id")
         val title = rawObject.asString("title")
-        val price = rawObject.asLong("price")
+        val price = rawObject.asInt("price")
         val fuelType: FuelTypes.Value = FuelTypes.withName(rawObject.asString("fuelType"))
         val isNew = rawObject.asBoolean("isNew")
-        val mileage = Try(Some(rawObject.asLong("mileage"))).getOrElse(None)
+        val mileage = Try(Some(rawObject.asInt("mileage"))).getOrElse(None)
         val firstRegistration = Try(Some(rawObject.asLocalDate("firstRegistration"))).getOrElse(None)
 
         Some(

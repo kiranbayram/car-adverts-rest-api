@@ -4,12 +4,12 @@ import org.joda.time.LocalDate
 import play.api.libs.json.Json
 
 case class CarAdvert (
-	id: Long,
+	id: Int,
 	title: String,
 	fuelType: FuelTypes.Value,
-	price: Long,
+	price: Int,
 	isNew: Boolean,
-	mileage: Option[Long] = None,	// Must be set only for used cars
+	mileage: Option[Int] = None,	// Must be set only for used cars
 	firstRegistration: Option[LocalDate] = None // Must be set only for used cars
 )
 
