@@ -80,12 +80,8 @@ class CarAdvertsRouterSpec extends PlaySpecification {
 
       status(postResult) must equalTo(CREATED)
 
-      val fakeRequest = FakeRequest(GET, s"/car/adverts/${CarAdvertExamples.newCar.id}")
-      val Some(result) = route(fakeRequest)
-
-      status(result) must equalTo(OK)
-      contentType(result) must beSome("application/json")
-      contentAsJson(result) must equalTo(body)
+      contentType(postResult) must beSome("application/json")
+      contentAsJson(postResult) must equalTo(body)
     }
 
     "Create and find the CarAdvert for a used car" in new WithApplicationLoader(fakeAppLoader) {
@@ -95,12 +91,8 @@ class CarAdvertsRouterSpec extends PlaySpecification {
 
       status(postResult) must equalTo(CREATED)
 
-      val fakeRequest = FakeRequest(GET, s"/car/adverts/${CarAdvertExamples.usedCar.id}")
-      val Some(result) = route(fakeRequest)
-
-      status(result) must equalTo(OK)
-      contentType(result) must beSome("application/json")
-      contentAsJson(result) must equalTo(body)
+      contentType(postResult) must beSome("application/json")
+      contentAsJson(postResult) must equalTo(body)
     }
 
     "Fetch all CarAdverts" in new WithApplicationLoader(fakeAppLoader) {
@@ -137,14 +129,10 @@ class CarAdvertsRouterSpec extends PlaySpecification {
       val fakePut = FakeRequest(PUT, s"/car/adverts/${CarAdvertExamples.newCar.id}").withJsonBody(updateBody)
       val Some(putResult) = route(fakePut)
 
-      status(putResult) must equalTo(NO_CONTENT)
+      status(putResult) must equalTo(OK)
 
-      val fakeRequest = FakeRequest(GET, s"/car/adverts/${CarAdvertExamples.newCar.id}")
-      val Some(result) = route(fakeRequest)
-
-      status(result) must equalTo(OK)
-      contentType(result) must beSome("application/json")
-      contentAsJson(result) must equalTo(updateBody)
+      contentType(putResult) must beSome("application/json")
+      contentAsJson(putResult) must equalTo(updateBody)
     }
 
     "Delete a CarAdvert" in new WithApplicationLoader(fakeAppLoader) {

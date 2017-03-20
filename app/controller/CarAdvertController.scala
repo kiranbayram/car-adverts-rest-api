@@ -51,7 +51,7 @@ class CarAdvertController(repository: CarAdvertsRepository = new MongoCarAdverts
         repository.create(carAdvert)
 
         Logger.debug(s"Response with status code 201 (Created) returned.")
-        Future(Created)
+        Future(Created(Json.toJson(carAdvert)))
       }
       else
         Future {
@@ -68,8 +68,8 @@ class CarAdvertController(repository: CarAdvertsRepository = new MongoCarAdverts
 
       if (validationErrors.isEmpty) {
         if(repository.update(id, carAdvert)) {
-          Logger.debug(s"Response with status code 204 (NoContent) returned.")
-          Future(NoContent)
+          Logger.debug(s"Response with status code 200 (Ok) returned.")
+          Future(Ok(Json.toJson(carAdvert)))
         }
         else {
           Logger.debug(s"Response with status code 404 (NotFound) returned.")
