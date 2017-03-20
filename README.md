@@ -102,14 +102,14 @@ A RESTful web-service to create, view, modify and delete car adverts. Used Play 
 
   ```json
   		{
-		      "id": 88,
-		      "title": "Title for advert 88",
-		      "fuelType": "diesel",
-		      "price": 20000,
-		      "isNew": false,
-		      "mileage": 1453,
-		      "firstRegistration": "2014-05-05"
-		   }
+			      "id": 88,
+			      "title": "Title for advert 88",
+			      "fuelType": "diesel",
+			      "price": 20000,
+			      "isNew": false,
+			      "mileage": 1453,
+			      "firstRegistration": "2014-05-05"
+			   }
    ```
 
 * **Success Response:**
@@ -120,14 +120,14 @@ A RESTful web-service to create, view, modify and delete car adverts. Used Play 
 
    ```json
    	{
-          "id": 88,
-          "title": "Title for advert 88",
-          "fuelType": "diesel",
-          "price": 20000,
-          "isNew": false,
-          "mileage": 1453,
-          "firstRegistration": "2014-05-05"
-       }
+		  "id": 88,
+		  "title": "Title for advert 88",
+		  "fuelType": "diesel",
+		  "price": 20000,
+		  "isNew": false,
+		  "mileage": 1453,
+		  "firstRegistration": "2014-05-05"
+	       }
    ```
 
 * **Error Response**
