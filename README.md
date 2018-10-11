@@ -3,7 +3,7 @@ A RESTful web-service to create, view, modify and delete car adverts. Used Play 
 
 **View all car adverts**
 ----
-  Returns json data for all car adverts.
+  Returns json data for all car adverts..
 
 * **URL**
   `/car/adverts`
